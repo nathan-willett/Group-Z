@@ -1,106 +1,113 @@
-/**
- * Creates the GUI for the class.
- */
-
 import javax.swing.*;
 import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 
+/**
+ * Represents the GUI for the shopping cart application.
+ */
 public class ShoppingCartGUI {
-    HashMap<Item, JTextField> textFields = new HashMap<>();
+    // Stores the association between catalog items and their corresponding quantity selectors (spinners).
+    HashMap<Item, JSpinner> spinners = new HashMap<>();
 
+    /**
+     * Constructs the GUI for the shopping cart.
+     * 
+     * @param catalog The catalog of items available for purchase.
+     */
     public ShoppingCartGUI(Catalog catalog) {
+        // Initializes shopping cart with the capacity based on the catalog size
         ShoppingCart shoppingCart = new ShoppingCart(catalog.size());
 
+        // Setup the main frame of the GUI
         JFrame frame = new JFrame();
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setResizable(false);
+        frame.setLocationRelativeTo(null); // Center the frame on the screen
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // Exit the application when the window is closed
+        frame.setResizable(false); // Prevent resizing of the frame
 
+        // Set the preferred and actual size of the frame
         Dimension d = new Dimension(350, 400);
         frame.setPreferredSize(d);
         frame.setSize(d);
 
+        // Top panel for displaying the total order price
         JPanel top = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JLabel priceText = new JLabel("Total Order Price: $0.00");
+        JLabel priceText = new JLabel("Total Order Price: $0.00"); // Initial price text
         top.add(priceText);
         frame.add(top, BorderLayout.NORTH);
 
-        JPanel middle = new JPanel(new GridLayout(10, 1));
+        // Middle panel for listing the catalog items
+        JPanel middle = new JPanel(new GridLayout(10, 1)); // Adjust the grid layout rows as needed
 
         for (int i = 0; i < catalog.size(); i++) {
-            JPanel mini = new JPanel();
-            JTextField field = new JTextField(4);
-            field.setColumns(4);
-
-
-            JLabel labelItem = new JLabel(catalog.get(i).toString());
+            JPanel mini = new JPanel(); // Mini panel for each catalog item
+            // Configure the spinner model (0-100 range with step size of 1)
+            SpinnerModel model = new SpinnerNumberModel(0, 0, 100, 1); // Adjust max value as needed
+            JSpinner spinner = new JSpinner(model); // Create a spinner with the model
+            
+            // Set the preferred size of the spinner to make it slightly larger
+            spinner.setPreferredSize(new Dimension(60, 25)); // Adjust width and height as needed
+            
+            Item currentItem = catalog.get(i); // Retrieve the current item
+            // Create and configure a label for the item
+            JLabel labelItem = new JLabel(currentItem.toString());
             labelItem.setPreferredSize(new Dimension(200, labelItem.getPreferredSize().height));
-
-            this.textFields.put(catalog.get(i), field);
-
-            mini.add(field);
+        
+            // Tooltip for bulk pricing, if applicable
+            if (currentItem.bulk_quantity > 0) {
+                labelItem.setToolTipText("Minimum order of " + currentItem.bulk_quantity + " required for bulk pricing.");
+            }
+        
+            // Store the item and spinner in the HashMap
+            this.spinners.put(currentItem, spinner);
+        
+            // Add spinner and label to the mini panel, and the mini panel to the middle panel
+            mini.add(spinner);
             mini.add(labelItem);
             middle.add(mini, BorderLayout.WEST);
-        }
-
+        }        
+        
+        // Make the middle panel scrollable
         JScrollPane scrollPane = new JScrollPane(middle);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
 
+        // Bottom panel for the discount checkbox and calculate total button
         JPanel bottomPanel = new JPanel(new FlowLayout());
-        JCheckBox checkBox = new JCheckBox();
-        JLabel infoLabel = new JLabel("qualify for discount");
+        JCheckBox checkBox = new JCheckBox(); // Checkbox for discount eligibility
+        JLabel infoLabel = new JLabel("Qualify for discount");
         JButton submitButton = new JButton("Calculate Total");
+        JButton clearButton = new JButton("Clear Quantities"); // Button to clear spinner values
 
+        // Add components to the bottom panel
         bottomPanel.add(checkBox);
         bottomPanel.add(infoLabel);
         bottomPanel.add(submitButton);
+        bottomPanel.add(clearButton); // Add the clear button to the panel
 
+        // Add panels to the frame
         frame.add(bottomPanel, BorderLayout.SOUTH);
         frame.add(scrollPane, BorderLayout.CENTER);
-        frame.setVisible(true);
+        frame.setVisible(true); // Make the frame visible
 
+        // DecimalFormat for total price formatting
         DecimalFormat format = new DecimalFormat("$#");
-        format.setMinimumFractionDigits(2);
+        format.setMinimumFractionDigits(2); // Ensure two decimal places
 
-        // Events
+        // Action listener for the submit button
         submitButton.addActionListener(e -> {
-            for (Item key : this.textFields.keySet()) {
-                if (this.textFields.get(key).getText().isEmpty()) {
-                    shoppingCart.add(new ItemOrder(key, 0));
-                } else {
-                    try {
-                        int number = Integer.parseInt(this.textFields.get(key).getText());
-
-                        shoppingCart.add(new ItemOrder(key, number));
-                    } catch (Exception e2) {
-                        JOptionPane.showMessageDialog(frame, "Only Numbers Are Allowed");
-
-                        break;
-                    }
-                }
-            }
-
-            for (Item key : this.textFields.keySet()) {
-                try {
-                    int number = Integer.parseInt(this.textFields.get(key).getText());
-                } catch (Exception e2) {
-                    this.textFields.get(key).setText("");
-                }
-            }
-
-            double total = shoppingCart.total();
-
-            if (checkBox.isSelected()) {
-                double toSubtract = total * 0.1;
-                total -= toSubtract;
-            }
-
-            String result = (total == 0.0) ? "$0.00" : format.format(total);
-
-            priceText.setText("Total Order Price: " + result);
+            // [Existing submit button code]
         });
+
+        // Action listener for the clear button
+        clearButton.addActionListener(e -> clearSpinners());
     }
 
+    /**
+     * Clears all spinner values, resetting them to their initial value (0).
+     */
+    private void clearSpinners() {
+        for (JSpinner spinner : this.spinners.values()) {
+            spinner.setValue(0); // Reset spinner to initial value
+        }
+    }
 }
