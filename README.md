@@ -121,9 +121,4 @@ program in the following order:
 
 ## Stylistic Guidelines:
 Your code should be well-structured and avoid redundancy. If you find yourself writing redundant code or with a very long method, add a private method. You may not add any public methods other than those described in this specification.
-<<<<<<< HEAD
-Follow past stylistic guidelines about indentation, line lengths, and identifier names. Place a comment at the beginning of your classes, at the start of each method, and on complex sections of code. Use local variables when possible.
-=======
-
-Follow past stylistic guidelines about indentation, line lengths, and identifier names. Place a comment at the beginning of your classes, at the start of each method, and on complex sections of code. Use local variables when possible.
->>>>>>> 1757e80c127ed2cb4be2689527f08c4f305eb08c
+Follow past stylistic guidelines about indentation, line lengths, and identifier names. Place a comment at the beginning of your classes, at the start of each method, and on complex sections of code. Use local variables when possible
