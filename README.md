@@ -29,7 +29,7 @@ You are required to implement four classes to make this program work. You may al
 
 ## Required Classes:
 ### Item Class
-
+The Item class stores information about the individual items.
 | Method                       | Description |
 | ---------------------------- | ----------- |
 | `Item(String name, double price)` | Constructor that takes a name and a price as arguments. |
@@ -38,7 +38,7 @@ You are required to implement four classes to make this program work. You may al
 | `toString()`                 | Returns a string representation of this item. |
 
 ### Catalog Class
-
+The Catalog class stores information about a collection of Items.
 | Method                 | Description |
 | ---------------------- | ----------- |
 | `Catalog(String name, int size)` | Constructor that takes the name of this catalog and the maximum size. |
@@ -48,16 +48,58 @@ You are required to implement four classes to make this program work. You may al
 | `getName()`            | Returns the name of this catalog. |
 
 ### ItemOrder Class
-
+The ItemOrder class stores information about a particular item and the quantity ordered for that Item.
 | Method                         | Description |
 | ------------------------------ | ----------- |
 | `ItemOrder(Item item, int quantity)` | Constructor that creates an item order for the given item and given quantity. |
+| `getPrice()` | Returns the cost for this item order. |
+| `getItem()` | Returns a reference to the Item in this order. |
 
 ### ShoppingCart Class
-
+The ShoppingCart class stores information about the overall order.
 | Method                         | Description |
 | ------------------------------ | ----------- |
 | `ShoppingCart(int size)`       | Constructor that takes the size of the cart as a parameter and creates an empty array of item orders. |
 | `add(ItemOrder itemOrder)`     | Adds an item order to the array, replacing any previous order for this item with the new order. |
 | `setDiscount(boolean value)`   | Sets whether or not this order gets a discount. |
 | `getTotal()`                   | Returns the total cost of the shopping cart. |
+
+## Extra Credit Classes:
+### ShoppingCartGUI
+The ShoppingCartGUI class represents the graphical user interface for the program.
+| Method                       | Description |
+| ---------------------------- | ----------- |
+| `ShoppingCartGUI(product catalog)` | Constructor takes a Catalog as a parameter. It should display a GUI window matching the components and layout shown on the first page. The number and content of items should match the items in the catalog. You are welcome to change the title, colors, borders, font and text-alignment to whatever you would like. The order total should be displayed in a disabled JTextField. This is very, very similar to the ClassList GUI we created in class. Create this by altering the ClassListGUI in the NetBeans GUI editor. |
+
+### ShoppingCartMain
+The ShoppingCartMain class contains the main method from which your program will run. We have
+provided an initial version with some sample products added to the catalog. You must replace these items with
+items of your own.
+
+## Implementation Guidelines:
+You may not introduce any other public methods to these classes, although you can add as many private
+methods as you would like. However, you are allowed to redefine toString in any of these classes (you might
+find that helpful in testing and debugging your code).
+
+You should use an array to implement the ShoppingCart and Catalog classes.
+
+### Hint 1:
+Notice that when you add an ItemOrder to a ShoppingCart, you have to deal with replacing any old order
+for the item. A user at one time might request 3 of some item and later change the request to 5 of that item. The
+order for 5 replaces the order for 3. The user isn’t requesting 8 of the items in making such a change. The add
+method might be passed an item order with a quantity of 0. This should behave just like the others, replacing any
+current order for this item or being added to the order list.
+
+### Hint 2:
+In the Item class you need to construct a String representation of the price. This isn’t easy to do for a
+number of reasons, but Java provides a convenient built-in object that will do it for you. It’s called a
+NumberFormat object and it appears in the java.text package (so you need to import java.text.*).
+You obtain a formatter by calling the static method called getCurrencyInstance(), as in:
+
+    NumberFormat nf = NumberFormat.getCurrencyInstance();
+You can then call the format method of this object passing it the price as a double and it will return a
+String with a dollar sign and the price in dollars and cents. For example, you might say:
+
+    double price = 38.5;
+    String text = nf.format(price);
+This would set the variable text to "$38.50".
