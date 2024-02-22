@@ -26,3 +26,38 @@ At the bottom of the frame you will find a checkbox for an overall discount. If 
 The order total should only update when the Calculate Total button is pressed. 
 
 You are required to implement four classes to make this program work. You may also implement two additional classes to create a GUI and earn extra credit.
+
+## Required Classes:
+### Item Class
+
+| Method                       | Description |
+| ---------------------------- | ----------- |
+| `Item(String name, double price)` | Constructor that takes a name and a price as arguments. |
+| `Item(String name, double price, int bulkQuantity, double bulkPrice)` | Constructor that takes a name and a single-item price and a bulk quantity and a bulk price as arguments. |
+| `priceFor(int quantity)`     | Returns the price for a given quantity of the item (taking into account bulk price, if applicable). |
+| `toString()`                 | Returns a string representation of this item. |
+
+### Catalog Class
+
+| Method                 | Description |
+| ---------------------- | ----------- |
+| `Catalog(String name, int size)` | Constructor that takes the name of this catalog and the maximum size. |
+| `add(Item item)`       | Adds an Item at the end of this list and returns true if there is space. |
+| `size()`               | Returns the number of items in this catalog. |
+| `get(int index)`       | Returns the Item with the given index. |
+| `getName()`            | Returns the name of this catalog. |
+
+### ItemOrder Class
+
+| Method                         | Description |
+| ------------------------------ | ----------- |
+| `ItemOrder(Item item, int quantity)` | Constructor that creates an item order for the given item and given quantity. |
+
+### ShoppingCart Class
+
+| Method                         | Description |
+| ------------------------------ | ----------- |
+| `ShoppingCart(int size)`       | Constructor that takes the size of the cart as a parameter and creates an empty array of item orders. |
+| `add(ItemOrder itemOrder)`     | Adds an item order to the array, replacing any previous order for this item with the new order. |
+| `setDiscount(boolean value)`   | Sets whether or not this order gets a discount. |
+| `getTotal()`                   | Returns the total cost of the shopping cart. |
