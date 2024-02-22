@@ -103,3 +103,24 @@ String with a dollar sign and the price in dollars and cents. For example, you m
     double price = 38.5;
     String text = nf.format(price);
 This would set the variable text to "$38.50".
+
+## Development Strategy:
+This program has a lot more files than our previous assignments so it can feel pretty intimidating at first.
+However, most of the classes you need to write are a very small amount of code. We suggest working on this
+program in the following order:
+
+**1. Write the Item class.** See Hint 2 for tips on the toString method. Run the provided ItemTest.java program and make sure that your class matches the expected output.
+
+**2. Write the ItemOrder class.** Run the provided ItemOrderTest.java program and make sure that your class matches the expected output.
+
+**3. Write the Catalog class.** Run the provided CatalogTest.java program and make sure that your class matches the expected output.
+
+**4. Write the ShoppingCart class.** Run the provided ShoppingCartTest.java program and make sure that your class matches the expected output. If you find your class failing to pass the tests and you aren’t sure why, take a look at Hint 1.
+
+**5. Write the ShoppingCartGUI class.** You will just need to alter our code from ClassListGUI to work with your other classes and represent a shopping cart.
+
+## Stylistic Guidelines:
+Your code should be well-structured and avoid redundancy. If you find yourself writing redundant code or with a very long method, add a private method. You may not add any public methods other than those described in this specification.
+Follow past stylistic guidelines about indentation, line lengths, and identifier names. Place a comment at the
+beginning of your classes, at the start of each method, and on complex sections of code. Use local variables
+when possible.
