@@ -11,12 +11,14 @@ public class ShoppingCartMain {
         Item pizzaSlice = new Item("Pizza Slice", 1.99);
         Item hotDog = new Item("Hot Dog", 1.50);
         Item pasta = new Item("Pasta", 9.99);
+
         // Bread and Chocolate have special bulk pricing
         Item bread = new Item("Bread", 0.99, 10, 0.79);
         Item chocolate = new Item("Chocolate", 2.99, 5, 2.49);
 
         // Instantiate the catalog and add the food items to it
         Catalog foodCatalog = new Catalog("Food Catalog", 5);
+        
         foodCatalog.add(pizzaSlice);
         foodCatalog.add(hotDog);
         foodCatalog.add(pasta);
