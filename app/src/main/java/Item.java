@@ -53,6 +53,9 @@ public class Item {
     /**
      * Returns a string representation of the item, including its name, price,
      * and bulk pricing details if applicable.
+     * 
+     * Example output without bulk pricing: "ItemName, $9.99"
+     * Example output with bulk pricing: "ItemName, $9.99 (5 @ $8.99 ea.)"
      *
      * @return A string description of the item
      */
