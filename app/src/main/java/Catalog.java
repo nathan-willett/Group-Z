@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Catalog {
     String name; // The name of the catalog
     int size; // The maximum number of items the catalog can hold
-    ArrayList<Item> itemList = new ArrayList<>(); // A list to store the items in the catalog
+    ArrayList<Item> inventoryList = new ArrayList<>(); // A list to store the items in the catalog
 
     /**
      * Constructs a new Catalog instance with the specified name and size.
@@ -29,10 +29,10 @@ public class Catalog {
      * @return true if the item was successfully added, false if the catalog is full
      */
     public boolean add(Item item) {
-        if (this.items.size() >= this.size) {
+        if (this.inventoryList.size() >= this.size) {
             return false; // Catalog is full
         }
-        this.cart.add(item);
+        this.inventoryList.add(item);
         return true;
     }
 
@@ -42,7 +42,7 @@ public class Catalog {
      * @return the size of the catalog
      */
     public int size() {
-        return this.cart.size();
+        return this.inventoryList.size();
     }
 
     /**
@@ -52,7 +52,7 @@ public class Catalog {
      * @return the item at the specified index
      */
     public Item get(int index) {
-        return cart.get(index);
+        return inventoryList.get(index);
     }
 
     /**
