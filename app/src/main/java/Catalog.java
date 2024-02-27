@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class Catalog {
     String name; // The name of the catalog
-    int Size; // The maximum number of items the catalog can hold
-    ArrayList<Item> cart = new ArrayList<>(); // A list to store the items in the catalog
+    int size; // The maximum number of items the catalog can hold
+    ArrayList<Item> itemList = new ArrayList<>(); // A list to store the items in the catalog
 
     /**
      * Constructs a new Catalog instance with the specified name and size.
@@ -19,7 +19,7 @@ public class Catalog {
      */
     public Catalog(String name, int size) {
         this.name = name;
-        this.Size = size;
+        this.size = size;
     }
 
     /**
@@ -29,7 +29,7 @@ public class Catalog {
      * @return true if the item was successfully added, false if the catalog is full
      */
     public boolean add(Item item) {
-        if (this.cart.size() >= this.Size) {
+        if (this.items.size() >= this.size) {
             return false; // Catalog is full
         }
         this.cart.add(item);

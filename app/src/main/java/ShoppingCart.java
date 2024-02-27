@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class ShoppingCart {
     int size; // The maximum number of items that can be added to the cart
     boolean discount = false; // Flag to indicate whether a discount is applied
-    ArrayList<ItemOrder> cart = new ArrayList<>(); // List to store item orders
+    ArrayList<ItemOrder> cartList = new ArrayList<>(); // List to store item orders
 
     /**
      * Constructs a ShoppingCart with a specified size limit.
@@ -27,13 +27,13 @@ public class ShoppingCart {
      * @param order The item order to be added to the cart.
      */
     public void add(ItemOrder order) {
-        for (int i = 1; i <= this.cart.size(); i++) {
+        for (int i = 1; i <= this.cartList.size(); i++) {
             int index = i - 1;
-            if (this.cart.get(index).item.name.equals(order.item.name)) {
-                this.cart.remove(index); // Remove the existing order for the same item
+            if (this.cartList.get(index).item.name.equals(order.item.name)) {
+                this.cartList.remove(index); // Remove the existing order for the same item
             }
         }
-        cart.add(order); // Add the new item order
+        cartList.add(order); // Add the new item order
     }
 
     /**
@@ -52,7 +52,7 @@ public class ShoppingCart {
      */
     public double total() {
         double price = 0;
-        for (ItemOrder order : this.cart) {
+        for (ItemOrder order : this.cartList) {
             double amount = order.item.priceFor(order.quantity); // Calculate price for each order
             price += amount;
         }

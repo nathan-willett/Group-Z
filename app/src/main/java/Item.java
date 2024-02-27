@@ -11,7 +11,7 @@ public class Item {
     int bulk_quantity;
     double bulk_price; // The price per unit when the item is purchased in bulk
 
-    DecimalFormat format = new DecimalFormat("$#"); // Format for displaying prices
+    DecimalFormat format = new DecimalFormat("$#.00"); // Format for displaying prices
 
     /**
      * Constructs an item that does not offer bulk pricing.
@@ -46,8 +46,21 @@ public class Item {
      * @return The total price for the specified quantity of items
      */
     public double priceFor(int quantity) {
-        // This method currently doesn't account for bulk pricing. Needs implementation.
-        return this.price * quantity;
+        if (quantity >= bulk_quantity) {
+            // Calculate the total for the bulk-eligible portion
+            int bulkPortion = (quantity / bulk_quantity) * bulk_quantity;
+            double bulkPrice = bulkPortion * bulk_price;
+    
+            // Calculate the total for the remainder at the regular price
+            int remainder = quantity % bulk_quantity;
+            double remainderPrice = remainder * price;
+    
+            // Return the total price
+            return bulkPrice + remainderPrice;
+        } else {
+            // If the quantity doesn't qualify for bulk pricing, charge the regular price
+            return quantity * price;
+        }
     }
 
     /**

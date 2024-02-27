@@ -95,7 +95,7 @@ public class ShoppingCartGUI {
 
         // Action listener for the submit button
         submitButton.addActionListener(e -> {
-            // [Existing submit button code]
+            //////////////////////
         });
 
         // Action listener for the clear button
