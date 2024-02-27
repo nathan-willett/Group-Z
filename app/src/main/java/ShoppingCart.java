@@ -1,11 +1,10 @@
+import java.util.ArrayList;
+
 /**
  * Represents a shopping cart that can hold item orders. This class allows
  * items to be added to the cart, optionally applies a discount, and calculates
  * the total price of items in the cart.
  */
-
-import java.util.ArrayList;
-
 public class ShoppingCart {
     int size; // The maximum number of items that can be added to the cart
     boolean discount = false; // Flag to indicate whether a discount is applied

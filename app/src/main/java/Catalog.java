@@ -1,11 +1,10 @@
+import java.util.ArrayList;
+
 /**
  * Represents a catalog that stores items.
  * 
  * A catalog has a name and a predefined size which limits the number of items it can hold.
  */
-
-import java.util.ArrayList;
-
 public class Catalog {
     String name; // The name of the catalog
     int size; // The maximum number of items the catalog can hold
