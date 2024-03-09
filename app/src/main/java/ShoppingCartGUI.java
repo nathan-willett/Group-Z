@@ -95,18 +95,44 @@ public class ShoppingCartGUI {
 
         // Action listener for the submit button
         submitButton.addActionListener(e -> {
-            //////////////////////
+            double totalPrice = 0.0; // Initialize total price
+
+            // Clear existing items from the shopping cart to prevent accumulation of
+            // previous selections
+            shoppingCart.clear(); // Assuming there's a clear method in ShoppingCart to remove all items
+
+            // Iterate through each spinner to gather item orders
+            for (Item item : spinners.keySet()) {
+                JSpinner spinner = spinners.get(item);
+                int quantity = (int) spinner.getValue(); // Retrieve the quantity selected for this item
+
+                if (quantity > 0) { // Only process items with a quantity selected
+                    ItemOrder order = new ItemOrder(item, quantity); // Create an ItemOrder for the selected quantity
+                    shoppingCart.add(order); // Add or update the item order in the shopping cart
+                }
+            }
+
+            // Apply discount if the discount checkbox is selected
+            shoppingCart.setDiscount(checkBox.isSelected());
+
+            // Calculate the total price of the shopping cart
+            totalPrice = shoppingCart.total();
+
+            // Update the total order price label
+            priceText.setText("Total Order Price: " + format.format(totalPrice));
         });
 
-        // Action listener for the clear button
-        clearButton.addActionListener(e -> clearSpinners());
+        clearButton.addActionListener(e -> {
+            shoppingCart.clear(); // Clears all item orders in the shopping cart
+            clearSpinners(); // Resets all spinners in the GUI
+        });
     }
 
     /**
      * Clears all spinner values, resetting them to their initial value (0).
      */
     private void clearSpinners() {
-        for (JSpinner spinner : this.spinners.values()) {
+        for (JSpinner spinner : spinners.values()) {
             spinner.setValue(0); // Reset spinner to initial value
         }
     }

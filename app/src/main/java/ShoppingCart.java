@@ -57,4 +57,8 @@ public class ShoppingCart {
         }
         return price; // Return the total price
     }
+
+    public void clear() {
+        cartList.clear(); // Clears all item orders from the shopping cart
+    }
 }
