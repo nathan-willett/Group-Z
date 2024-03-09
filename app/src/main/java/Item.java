@@ -46,20 +46,25 @@ public class Item {
      * @return The total price for the specified quantity of items
      */
     public double priceFor(int quantity) {
-        if (quantity >= bulk_quantity) {
-            // Calculate the total for the bulk-eligible portion
-            int bulkPortion = (quantity / bulk_quantity) * bulk_quantity;
-            double bulkPrice = bulkPortion * bulk_price;
-    
-            // Calculate the total for the remainder at the regular price
-            int remainder = quantity % bulk_quantity;
-            double remainderPrice = remainder * price;
-    
-            // Return the total price
-            return bulkPrice + remainderPrice;
-        } else {
-            // If the quantity doesn't qualify for bulk pricing, charge the regular price
-            return quantity * price;
+        try {
+            // Check if bulk pricing applies and avoid division by zero
+            if (this.bulk_quantity > 0) {
+                // If quantity is a multiple of the bulk quantity or more, calculate using bulk pricing
+                if (quantity % this.bulk_quantity == 0) {
+                    return (quantity / this.bulk_quantity) * this.bulk_price;
+                } else {
+                    // Calculate part of the order with bulk pricing and the remainder at regular price
+                    int bulkPart = quantity / this.bulk_quantity; // Bulk part of the order
+                    int remainder = quantity % this.bulk_quantity; // Remainder of the order
+                    return (bulkPart * this.bulk_price) + (remainder * this.price);
+                }
+            } else {
+                // If bulk pricing does not apply, calculate the total at the regular price
+                return quantity * this.price;
+            }
+        } catch (ArithmeticException e) {
+            System.out.print("An error occurred: " + e.getMessage() + ". Cannot divide by zero.\n");
+            return 0.0;
         }
     }
 
