@@ -33,6 +33,7 @@ public class ShoppingCartGUI {
         // Top panel for displaying the total order price
         JPanel top = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel priceText = new JLabel("Total Order Price: $0.00"); // Initial price text
+        priceText.setFont(priceText.getFont().deriveFont(15f)); // Set font size to 15
         top.add(priceText);
         frame.add(top, BorderLayout.NORTH);
 
