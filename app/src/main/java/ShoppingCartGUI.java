@@ -21,6 +21,7 @@ public class ShoppingCartGUI {
 
         // Setup the main frame of the GUI
         JFrame frame = new JFrame();
+        frame.setTitle("ShoppingCartGUI");
         frame.setLocationRelativeTo(null); // Center the frame on the screen
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // Exit the application when the window is closed
         frame.setResizable(false); // Prevent resizing of the frame
@@ -75,9 +76,9 @@ public class ShoppingCartGUI {
         // Bottom panel for the discount checkbox and calculate total button
         JPanel bottomPanel = new JPanel(new FlowLayout());
         JCheckBox checkBox = new JCheckBox(); // Checkbox for discount eligibility
-        JLabel infoLabel = new JLabel("Qualify for discount");
-        JButton submitButton = new JButton("Calculate Total");
-        JButton clearButton = new JButton("Clear Quantities"); // Button to clear spinner values
+        JLabel infoLabel = new JLabel("Apply discount   ");
+        JButton submitButton = new JButton("Calculate");
+        JButton clearButton = new JButton("Clear"); // Button to clear spinner values
 
         // Add components to the bottom panel
         bottomPanel.add(checkBox);
