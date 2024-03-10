@@ -126,6 +126,7 @@ public class ShoppingCartGUI {
         clearButton.addActionListener(e -> {
             shoppingCart.clear(); // Clears all item orders in the shopping cart
             clearSpinners(); // Resets all spinners in the GUI
+            priceText.setText("Total Order Price: $0.00");
         });
     }
 
