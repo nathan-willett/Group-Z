@@ -25,7 +25,7 @@ public class Item {
     }
 
     /**
-     * Constructs an item that offers bulk pricing.
+     * Constructs an item that does offer bulk pricing.
      *
      * @param name          The name of the item
      * @param price         The regular price of the item

@@ -61,4 +61,12 @@ public class ShoppingCart {
     public void clear() {
         cartList.clear(); // Clears all item orders from the shopping cart
     }
+
+    /**
+     * Clears all item orders from the cart.
+     */
+    public void clear() {
+        cartList.clear();
+    }
+
 }
