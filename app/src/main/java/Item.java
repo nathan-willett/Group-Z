@@ -1,17 +1,24 @@
-/**
- * Class that handles the items purchased.
- */
-
 import java.text.DecimalFormat;
 
+/**
+ * Represents an item that can be purchased. This class supports both individual
+ * and bulk pricing models.
+ */
 public class Item {
-    String name;
-    double price;
+    String name; // The name of the item
+    double price; // The price of the item when not purchased in bulk
+    // The minimum number of units required for an item to qualify for bulk pricing
     int bulk_quantity;
-    double bulk_price;
+    double bulk_price; // The price per unit when the item is purchased in bulk
 
-    DecimalFormat format = new DecimalFormat("$#");
+    DecimalFormat format = new DecimalFormat("$#.00"); // Format for displaying prices
 
+    /**
+     * Constructs an item that does not offer bulk pricing.
+     *
+     * @param name  The name of the item
+     * @param price The price of the item
+     */
     public Item(String name, double price) {
         this.name = name;
         this.price = price;
@@ -32,30 +39,49 @@ public class Item {
         this.bulk_price = bulk_price;
     }
 
+    /**
+     * Calculates the price for a specified quantity of the item, considering bulk
+     * pricing.
+     *
+     * @param quantity The quantity of items to be purchased
+     * @return The total price for the specified quantity of items
+     */
     public double priceFor(int quantity) {
-        try { // Try/catch for divison by zero
-        if ((quantity % this.bulk_quantity == 0) && this.bulk_quantity > 0) // If the quantity is a multiple of the bulk amount, return the multiple times the bulk price
-            return quantity / this.bulk_quantity * this.bulk_price;
-        else if (this.bulk_quantity > 0) // Returns the calculated price if the quantity is less than the bulk quantity or if it's not a multiple 
-            return (quantity / this.bulk_quantity * this.bulk_price) + (quantity % this.bulk_quantity * this.price);
-        else // If the bulk quantity is zero, return the quantity times the price
-            return quantity*this.price;
-        }
-        catch (ArithmeticException e) {
-            System.out.print("Cannot divide by zero.\n");
-            return 0.0;
+        if (this.bulk_quantity > 0) {
+            // Calculate the total for the bulk-eligible portion
+            int bulkPortion = quantity / this.bulk_quantity * this.bulk_quantity; // Total bulk-eligible units
+            double bulkTotalPrice = bulkPortion * this.bulk_price; // Total price for bulk portion
+
+            // Calculate the total for the remainder at the regular price
+            int remainder = quantity % this.bulk_quantity; // Units not eligible for bulk pricing
+            double remainderPrice = remainder * this.price; // Price for remainder units
+
+            // Return the total price combining bulk and non-bulk portions
+            return bulkTotalPrice + remainderPrice;
+        } else {
+            // If bulk pricing does not apply or if the item is not eligible for bulk
+            // pricing
+            // (bulk_quantity is 0), calculate the total at the regular price
+            return quantity * this.price;
         }
     }
 
+    /**
+     * Returns a string representation of the item, including its name, price,
+     * and bulk pricing details if applicable.
+     * 
+     * Example output without bulk pricing: "ItemName, $9.99"
+     * Example output with bulk pricing: "ItemName, $9.99 (5 @ $8.99 ea.)"
+     *
+     * @return A string description of the item
+     */
+    @Override
     public String toString() {
         this.format.setMinimumFractionDigits(2);
-
-
         if (this.bulk_quantity == 0 && this.bulk_price == 0) {
             return name + ", " + this.format.format(this.price);
         }
-
-
-        return name + ", " + this.format.format(this.price) + " (" + this.bulk_quantity + " for " + this.format.format(this.bulk_price) + ")";
+        return name + ", " + this.format.format(this.price) + " (" + this.bulk_quantity + " @ "
+                + this.format.format(this.bulk_price) + " ea.)";
     }
 }
