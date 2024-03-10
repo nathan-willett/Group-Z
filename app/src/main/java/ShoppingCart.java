@@ -55,18 +55,13 @@ public class ShoppingCart {
             double amount = order.item.priceFor(order.quantity); // Calculate price for each order
             price += amount;
         }
+        if (discount) {
+            price *= 0.9; // If the 'discount' checkbox is selected, apply a 10% discount
+        }
         return price; // Return the total price
     }
 
     public void clear() {
         cartList.clear(); // Clears all item orders from the shopping cart
     }
-
-    /**
-     * Clears all item orders from the cart.
-     */
-    public void clear() {
-        cartList.clear();
-    }
-
 }

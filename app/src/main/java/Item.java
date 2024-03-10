@@ -7,8 +7,7 @@ import java.text.DecimalFormat;
 public class Item {
     String name; // The name of the item
     double price; // The price of the item when not purchased in bulk
-    // The minimum number of units required for an item to qualify for bulk pricing
-    int bulk_quantity;
+    int bulk_quantity; // The minimum number of units required for an item to qualify for bulk pricing
     double bulk_price; // The price per unit when the item is purchased in bulk
 
     DecimalFormat format = new DecimalFormat("$#.00"); // Format for displaying prices
@@ -25,7 +24,7 @@ public class Item {
     }
 
     /**
-     * Constructs an item that does offer bulk pricing.
+     * Constructs an item that offers bulk pricing.
      *
      * @param name          The name of the item
      * @param price         The regular price of the item
@@ -59,9 +58,8 @@ public class Item {
             // Return the total price combining bulk and non-bulk portions
             return bulkTotalPrice + remainderPrice;
         } else {
-            // If bulk pricing does not apply or if the item is not eligible for bulk
-            // pricing
-            // (bulk_quantity is 0), calculate the total at the regular price
+            /* If bulk pricing does not apply or if the item is not eligible for bulk pricing
+            (bulk_quantity is 0), calculate the total at the regular price */
             return quantity * this.price;
         }
     }
