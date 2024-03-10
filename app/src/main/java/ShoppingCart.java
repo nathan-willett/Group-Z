@@ -27,12 +27,12 @@ public class ShoppingCart {
         for (int i = 1; i <= this.cartList.size(); i++) {
             int index = i - 1;
 
-            if (this.cart.get(index).item.name.equals(order.item.name)) {
-                this.cart.remove(index);
+            if (this.cartList.get(index).item.name.equals(order.item.name)) {
+                this.cartList.remove(index);
             }
         }
 
-        cart.add(order);
+        cartList.add(order);
     }
 
     public void setDiscount(boolean value) {
@@ -48,4 +48,12 @@ public class ShoppingCart {
 
         return price;
     }
+
+    /**
+     * Clears all item orders from the cart.
+     */
+    public void clear() {
+        cartList.clear();
+    }
+
 }
