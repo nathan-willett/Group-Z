@@ -17,6 +17,14 @@ public class Item {
         this.price = price;
     }
 
+    /**
+     * Constructs an item that does offer bulk pricing.
+     *
+     * @param name          The name of the item
+     * @param price         The regular price of the item
+     * @param bulk_quantity The minimum quantity for bulk pricing
+     * @param bulk_price    The price per unit when purchased in bulk
+     */
     public Item(String name, double price, int bulk_quantity, double bulk_price) {
         this.name = name;
         this.price = price;

@@ -23,7 +23,8 @@ public class ShoppingCartGUI {
         frame.setSize(d);
 
         JPanel top = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JLabel priceText = new JLabel("Total Order Price: $0.00");
+        JLabel priceText = new JLabel("Total Order Price: $0.00"); // Initial price text
+        priceText.setFont(priceText.getFont().deriveFont(15f)); // Set font size to 15
         top.add(priceText);
         frame.add(top, BorderLayout.NORTH);
 
@@ -66,19 +67,20 @@ public class ShoppingCartGUI {
 
         // Events
         submitButton.addActionListener(e -> {
-            for (Item key : this.textFields.keySet()) {
-                if (this.textFields.get(key).getText().isEmpty()) {
-                    shoppingCart.add(new ItemOrder(key, 0));
-                } else {
-                    try {
-                        int number = Integer.parseInt(this.textFields.get(key).getText());
+            double totalPrice = 0.0; // Initialize total price
 
-                        shoppingCart.add(new ItemOrder(key, number));
-                    } catch (Exception e2) {
-                        JOptionPane.showMessageDialog(frame, "Only Numbers Are Allowed");
+            // Clear existing items from the shopping cart to prevent accumulation of
+            // previous selections
+            shoppingCart.clear(); // Assuming there's a clear method in ShoppingCart to remove all items
 
-                        break;
-                    }
+            // Iterate through each spinner to gather item orders
+            for (Item item : spinners.keySet()) {
+                JSpinner spinner = spinners.get(item);
+                int quantity = (int) spinner.getValue(); // Retrieve the quantity selected for this item
+
+                if (quantity > 0) { // Only process items with a quantity selected
+                    LineItem order = new LineItem(item, quantity); // Create an ItemOrder for the selected quantity
+                    shoppingCart.add(order); // Add or update the item order in the shopping cart
                 }
             }
 
