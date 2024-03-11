@@ -38,6 +38,11 @@ public class Item {
         this.bulk_price = bulk_price;
     }
 
+    /** Retrieves the name of the item */
+    public String getName() {
+        return this.name;
+    }
+    
     /**
      * Calculates the price for a specified quantity of the item, considering bulk
      * pricing.

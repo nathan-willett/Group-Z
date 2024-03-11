@@ -28,7 +28,7 @@ public class ShoppingCart {
     public void add(LineItem order) {
         for (int i = 1; i <= this.cartList.size(); i++) {
             int index = i - 1;
-            if (this.cartList.get(index).item.name.equals(order.item.name)) {
+            if (this.cartList.get(index).getItem().getName().equals(order.getItem().getName())) {
                 this.cartList.remove(index); // Remove the existing order for the same item
             }
         }
@@ -51,12 +51,15 @@ public class ShoppingCart {
      */
     public double total() {
         double price = 0;
+        // Calculate price for each order
         for (LineItem order : this.cartList) {
-            double amount = order.item.priceFor(order.quantity); // Calculate price for each order
+            double amount = order.getItem().priceFor(order.getQuantity());
             price += amount;
         }
+
+        // If the 'discount' checkbox is selected, apply a 10% discount
         if (discount) {
-            price *= 0.9; // If the 'discount' checkbox is selected, apply a 10% discount
+            price *= 0.9;
         }
         return price; // Return the total price
     }
