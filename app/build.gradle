@@ -34,3 +34,8 @@ application {
     // Define the main class for the application.
     mainClass = 'ShoppingCartMain'
 }
+
+task generateJavadocs(type: Javadoc) {
+    source = sourceSets.main.allJava
+    destinationDir = file("./docs")
+}
