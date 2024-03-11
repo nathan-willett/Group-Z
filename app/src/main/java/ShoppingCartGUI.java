@@ -123,9 +123,12 @@ public class ShoppingCartGUI {
             priceText.setText("Total Order Price: " + format.format(totalPrice));
         });
 
+        /** Clears all LineItems in the shopping cart */
         clearButton.addActionListener(e -> {
-            shoppingCart.clear(); // Clears all item orders in the shopping cart
+            shoppingCart.clear();
             clearSpinners(); // Resets all spinners in the GUI
+            
+            // Set the 
             priceText.setText("Total Order Price: $0.00");
         });
     }
