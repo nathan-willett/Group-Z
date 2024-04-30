@@ -35,6 +35,29 @@ application {
     mainClass = 'ShoppingCartMain'
 }
 
+sourceSets {
+    main {
+        java {
+            srcDirs = ['app/src/main/java']
+        }
+        resources {
+            srcDirs = ['app/src/main/resources']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['app/src/test/java']
+        }
+        resources {
+            srcDirs = ['app/src/test/resources']
+        }
+    }
+}
+
+run {
+    classpath = sourceSets.main.runtimeClasspath
+}
+
 task generateJavadocs(type: Javadoc) {
     source = sourceSets.main.allJava
     destinationDir = file("./docs")

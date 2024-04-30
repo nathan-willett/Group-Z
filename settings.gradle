@@ -11,4 +11,3 @@ plugins {
 }
 
 rootProject.name = 'Group-Z'
-include('app')
