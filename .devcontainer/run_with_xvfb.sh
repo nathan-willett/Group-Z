@@ -1,30 +1,29 @@
 #!/bin/bash
 
-# Update and install necessary libraries
-sudo apt-get update
-sudo apt-get install -y xvfb x11vnc openbox
-
 # Create /tmp/.X11-unix directory with correct permissions
-sudo mkdir -p /tmp/.X11-unix
-sudo chmod 1777 /tmp/.X11-unix
-sudo chown root:root /tmp/.X11-unix
+mkdir -p /tmp/.X11-unix
+chmod 1777 /tmp/.X11-unix
+chown root:root /tmp/.X11-unix
 
 # Kill any existing Xvfb processes
 pkill -f "Xvfb :99" || true
 
 # Remove the lock file if it exists
-sudo rm -f /tmp/.X99-lock
+rm -f /tmp/.X99-lock
 
 # Start Xvfb and set DISPLAY environment variable
 Xvfb :99 -screen 0 1024x768x24 &
 XVFB_PID=$!
 export DISPLAY=:99
 
-# Start x11vnc without a password
-x11vnc -display :99 -nopw -forever -bg -o /tmp/x11vnc.log &
+# Start x11vnc without a password on port 5900
+x11vnc -display :99 -nopw -forever -rfbport 5900 -bg -o /tmp/x11vnc.log -noxdamage -noxfixes -noxkb -nolookup -no6 -shared &
 
 # Start openbox window manager
 openbox-session &
+
+# Start noVNC
+websockify --web=/usr/share/novnc/ --wrap-mode=ignore 6080 localhost:5900 &
 
 # Wait a moment to ensure Xvfb has started
 sleep 2
@@ -33,7 +32,7 @@ sleep 2
 echo "DISPLAY is set to $DISPLAY"
 
 # Change to the root directory of the project
-cd /workspaces/$(basename $PWD)
+cd /workspaces/Group-Z || exit
 
 # Ensure gradlew has executable permissions
 if [ -f ./gradlew ]; then
@@ -56,14 +55,8 @@ if [ -z "$JAR_FILE" ]; then
     exit 1
 fi
 
-# Run the Java application with the added JVM option
-JAVA_BIN="/home/codespace/java/current/bin/java"
-if [ -f "$JAVA_BIN" ]; then
-    /usr/bin/env DISPLAY=:99 "$JAVA_BIN" -Dsun.java2d.xrender=false -jar "$JAR_FILE"
-else
-    echo "Java binary not found at $JAVA_BIN."
-    exit 1
-fi
+# Run your .sh script
+/usr/bin/env DISPLAY=:99 /path/to/your-script.sh &
 
 # Trap to ensure Xvfb and x11vnc shut down gracefully
 trap "echo 'Stopping Xvfb and x11vnc'; kill $XVFB_PID; pkill -f x11vnc" EXIT

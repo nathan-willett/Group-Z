@@ -1,22 +1,32 @@
 {
-    "image": "mcr.microsoft.com/devcontainers/universal:2",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
     "features": {
         "ghcr.io/devcontainers/features/desktop-lite:1": {}
     },
     "forwardPorts": [
-        6080
+        6080,
+        5900
     ],
     "portsAttributes": {
         "6080": {
             "label": "desktop"
+        },
+        "5900": {
+            "label": "vnc"
         }
     },
-    "postCreateCommand": "bash ./run_with_xvfb.sh",
+    "postCreateCommand": "bash .devcontainer/run_with_xvfb.sh",
     "customizations": {
         "vscode": {
             "extensions": [
                 "vscjava.vscode-java-pack",
-                "ms-vscode-remote.remote-vscode"
+                "ms-vscode-remote.remote-vscode",
+                "king2021.vnc-extension",
+                "GitHub.copilot-chat",
+                "ms-azuretools.vscode-docker",
+                "vscjava.vscode-gradle"
             ]
         }
     }
